@@ -1,0 +1,55 @@
+USE OrdersDatabase; 
+GO 
+CREATE TABLE Sales.LineItems 
+(OrderID INT NOT NULL 
+,ProductID INT NOT NULL 
+,UnitPrice MONEY NOT NULL 
+,Quantity SMALLINT NOT NULL 
+CONSTRAINT PK_LineItems PRIMARY KEY (OrderID,ProductID) 
+CONSTRAINT FK_LineItems_Orders FOREIGN KEY (OrderID) 
+REFERENCES Sales.Orders (OrderID)); 
+GO
+
+USE OrdersDatabase;
+GO
+
+INSERT INTO Sales.LineItems
+VALUES (101,11,15.00,1)
+INSERT INTO Sales.LineItems
+VALUES (101,44,30.00,1)
+INSERT INTO Sales.LineItems
+VALUES (102,44,30.00,1)
+INSERT INTO Sales.LineItems
+VALUES (103,33,30.00,2)
+INSERT INTO Sales.LineItems
+VALUES (103,22,15.00,1)
+INSERT INTO Sales.LineItems
+VALUES (104,44,30.00,1)
+INSERT INTO Sales.LineItems
+VALUES (104,11,15.00,1)
+INSERT INTO Sales.LineItems
+VALUES (104,33,30.00,1);
+GO
+
+SELECT * 
+FROM Sales.LineItems
+GO
+
+SELECT * 
+FROM Sales.Orders
+GO
+
+ALTER TABLE Sales.Orders 
+ADD CONSTRAINT DF_OrderDate DEFAULT GETDATE() FOR OrderDate; 
+GO
+
+INSERT INTO Sales.Orders 
+VALUES (110, 3, DEFAULT); 
+GO 
+SELECT * FROM Sales.Orders 
+WHERE OrderID = 110; 
+GO
+
+SELECT * 
+FROM Sales.Orders
+GO
